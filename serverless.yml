@@ -1,0 +1,58 @@
+service: serverless
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+  iam:
+    role:
+      statements:
+        - Effect: 'Allow'
+          Action:
+            - 'dynamodb:PutItem'
+            - 'dynamodb:Get*'
+            - 'dynamodb:Scan*'
+            - 'dynamodb:UpdateItem'
+            - 'dynamodb:DeleteItem'
+          Resource: arn:aws:dynamodb:us-east-1:994135220557:table/firsttable
+
+functions:
+  addtodo:
+    handler: src/addtodo.handler
+    events:
+      - httpApi:
+          path: /
+          method: post
+  gettodo:
+    handler: src/gettodo.handler
+    events:
+      - httpApi:
+          path: /getdata
+          method: get
+  getsingletodo:
+    handler: src/getsingletodo.handler
+    events:
+      - httpApi:
+          path: /getdata/{id}
+          method: get
+  puttodo:
+    handler: src/puttodo.handler
+    events:
+      - httpApi:
+          path: /getdata/{id}
+          method: put
+
+resources:
+  Resources:
+    CustomerTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        BillingMode: PAY_PER_REQUEST
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        TableName: firsttable

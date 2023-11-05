@@ -1,0 +1,55 @@
+step 1: first you need to open command prompt and to desk top then you need to connect it with aws, 
+for that you first needto make a iam user and give it full access then copy this command and add credential user in it:
+serverless config credentials --provider provider --key key --secret secret
+serverless config credentials --provider aws --key kldjlkflkfjflkjlk --secret lkdljflkflklkd
+
+step 2:go to serverless documentation and go to tutorial, all steps follow from it,
+npm install -g serverless
+serverless 
+click on next next next and follow the http api wali command pa ok kerna hai
+now set region first check your region in lamda then in set in serverless.yml file:
+region: us-east-1
+then in command prompt write command for deployment
+sls deploy 
+then it will start deploy.
+---------------------------------------------------------------------------------------------------
+now steps to connent and use dynamodb with serverless;
+step 1:we will follow the same tutorial and then copy code from tutorial and then add values init;
+resources:
+  Resources:
+    CustomerTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        BillingMode: PAY_PER_REQUEST
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        TableName: firsttable or anyname you want
+
+then use command sls deploy;
+
+step 2: now install npm package manger by using command;
+npm init
+we install package manage npm to install different packages;
+now for id and for aws we will install two packages uuid and aws-sdk package from npm;
+
+step 3: npm i uuid and npm i aws-sdk
+
+using document continue on fuction and give permission to it;
+you will copy some permission on serverless.yml file then go to dynamoDb database, go to table and 
+now you need the unique identifier to wheich you are going to giving permission for example in current 
+case it is
+arn:aws:dynamodb:us-east-1:994135220557:table/firsttable
+you will find the above identifer inside table , go to overview and then additional setting;
+-------------------------
+important: for debugging go to cloudwatch there you can see errors and then inside check log and then  check inside log groups
+-------------------------
+
+sls deploy ---deploy everything
+sls deploy -f functionname    ---deploy function only
+
+
+
